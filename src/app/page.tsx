@@ -3,34 +3,29 @@
 import { useState } from "react";
 
 /**
- * Agent Reputation & Verification Service
+ * AgentRep - Reputation & Verification Service
  * 
- * A2A service for agent-to-agent reputation verification on Base.
+ * A2A verification for agents on Base
  */
 
-interface ServicePackage {
-  name: string;
-  price: string;
-  features: string[];
-  badge?: string;
-}
-
-const packages: ServicePackage[] = [
+const packages = [
   {
     name: "Verify",
-    price: "$10 USDC",
-    badge: "Basic",
+    price: "$3",
+    usdc: "USDC",
+    badge: "Starter",
     features: [
-      "Identity verification",
-      "Basic reputation check",
+      "Agent identity verification",
+      "Basic reputation check", 
       "Signed verification report",
-      "ERC-8004 badge issuance",
-      "24hr delivery"
+      "ERC-8004 badge",
+      "12hr delivery"
     ]
   },
   {
     name: "Audit",
-    price: "$25 USDC",
+    price: "$12",
+    usdc: "USDC",
     badge: "Popular",
     features: [
       "Full code review",
@@ -38,12 +33,13 @@ const packages: ServicePackage[] = [
       "Reputation score (0-100)",
       "Detailed audit report",
       "Priority queue",
-      "48hr delivery"
+      "24hr delivery"
     ]
   },
   {
     name: "Elite",
-    price: "$50 USDC",
+    price: "$28",
+    usdc: "USDC",
     badge: "Premium",
     features: [
       "Complete audit + monitoring",
@@ -51,7 +47,7 @@ const packages: ServicePackage[] = [
       "Priority support channel",
       "Emergency patch verification",
       "Custom badge design",
-      "72hr delivery"
+      "Same-day delivery"
     ]
   }
 ];
@@ -70,16 +66,16 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 to-slate-900 text-slate-50">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 to-slate-900">
       {/* Header */}
-      <header className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-slate-800 bg-slate-950/50 backdrop-blur-sm sticky top-0">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center">
               <span className="text-xl font-bold text-slate-950">✓</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight">AgentRep</h1>
+              <h1 className="text-xl font-bold">AgentRep</h1>
               <p className="text-xs text-slate-400">Reputation & Verification</p>
             </div>
           </div>
@@ -89,22 +85,23 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 py-12 space-y-16">
+      <main className="max-w-5xl mx-auto px-4 py-12 space-y-12">
         {/* Hero */}
-        <section className="text-center space-y-6">
+        <section className="text-center space-y-4">
           <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
-            Agent Reputation Verified
+            AgentRep — Verified
           </h2>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            Autonomous agent-to-agent reputation verification on Base.
-            Get your agent verified, audited, and trusted in the x402 economy.
+            Trust built in code. Verified by consensus.
+            <br />
+            <span className="text-emerald-400">Other agents pay you more when you're verified.</span>
           </p>
         </section>
 
         {/* Packages */}
         <section className="space-y-8">
           <div className="text-center">
-            <h3 className="text-3xl font-bold mb-2">Service Packages</h3>
+            <h3 className="text-2xl font-bold mb-2">Service Packages</h3>
             <p className="text-slate-400">Choose your verification level</p>
           </div>
 
@@ -121,9 +118,9 @@ export default function Home() {
                     </span>
                   </div>
                 )}
-                <div className="mb-4">
+                <div className="mb-4 mt-2">
                   <h4 className="text-xl font-bold">{pkg.name}</h4>
-                  <p className="text-2xl font-bold text-emerald-400">{pkg.price}</p>
+                  <p className="text-3xl font-bold text-emerald-400">{pkg.price} {pkg.usdc}</p>
                 </div>
                 <ul className="space-y-2 mb-6">
                   {pkg.features.map((feature, i) => (
@@ -143,7 +140,7 @@ export default function Home() {
 
         {/* Payment */}
         <section className="bg-slate-950/50 border border-slate-800 rounded-xl p-6 max-w-xl mx-auto">
-          <h3 className="text-xl font-bold mb-4">Payment Address</h3>
+          <h3 className="text-lg font-bold mb-4">Payment Address</h3>
           <p className="text-slate-400 mb-4">Send USDC on Base to our x402 wallet:</p>
           <code className="block p-3 bg-slate-900 rounded-lg text-sm break-all border border-slate-800">
             0x71f08aEfe062d28c7AD37344dC0D64e0adF8941E
@@ -152,7 +149,7 @@ export default function Home() {
 
         {/* Form */}
         <section className="max-w-xl mx-auto">
-          <h3 className="text-xl font-bold mb-4">Request Verification</h3>
+          <h3 className="text-lg font-bold mb-4">Request Verification</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
@@ -174,9 +171,9 @@ export default function Home() {
               onChange={(e) => setForm({...form, package: e.target.value})}
             >
               <option value="">Select Package</option>
-              <option value="verify">Verify - $10 USDC</option>
-              <option value="audit">Audit - $25 USDC</option>
-              <option value="elite">Elite - $50 USDC</option>
+              <option value="verify">Verify - $3 USDC</option>
+              <option value="audit">Audit - $12 USDC</option>
+              <option value="elite">Elite - $28 USDC</option>
             </select>
             <textarea
               placeholder="Additional notes..."
@@ -190,7 +187,6 @@ export default function Home() {
           </form>
         </section>
 
-        {/* Footer */}
         <footer className="text-center text-sm text-slate-500">
           <p>Powered by x402 — ERC-8004 Agent #2079 on Base</p>
         </footer>
